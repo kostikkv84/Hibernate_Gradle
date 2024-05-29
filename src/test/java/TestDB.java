@@ -1,6 +1,7 @@
 import entity.Products;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import services.ProductService;
 
 import java.io.File;
@@ -11,6 +12,7 @@ public class TestDB extends BaseTest{
 
 
     //******************************************************
+
     @Test
     void insertManualIntoTable(){
 
@@ -54,7 +56,6 @@ public class TestDB extends BaseTest{
 
         Products getProducts = productService.findProduct(products.getId()); // получаем сохраненный продукт
         Assertions.assertEquals(products.getName(),getProducts.getName());   // сравниваем значения
-
     }
 
     @Test
@@ -62,6 +63,38 @@ public class TestDB extends BaseTest{
         ProductService productService = new ProductService(); // стартуем сессию
          Products product = productService.findProduct(13); // сохраняем продукт в БД
        Assertions.assertEquals("Samsung Galaxy1", product.getName());   // сравниваем значения
+    }
+
+    @Test
+    public void updateProduct() throws IOException {
+        ProductService productService = new ProductService(); // стартуем сессию
+        Products product = productService.findProduct(17); // находим запись
+        product.setDescription("newDescription Test");  // меняем запись
+        productService.updateProduct(product);   // обновляем запись
+        Products newProduct = productService.findProduct(17); // находим обновленную запись
+
+        // сравниваем результаты
+        Assertions.assertEquals(product.getDescription(), newProduct.getDescription());   // сравниваем значения
+    }
+
+    @Test
+    public void deleteProduct() throws IOException {
+        ProductService productService = new ProductService();  // Открыли сессию
+        File file = new File("src/test/jsonFiles/product.json"); // нашли JSON с данными
+        Products product = objectM.readValue(file, Products.class); // записываем из Json в класс Product
+        productService.saveProduct(product); // сохраняем продукт в БД
+        Integer id = product.getId(); // получаем id нового продукта
+        product = productService.findProduct(id); // находим созданный продукт
+
+        System.out.println(product);
+        productService.deleteProduct(product);  // удаляем продукт из БД
+        Products getProducts = productService.findProduct(id); // ищем удаленную запись
+        // сравниваем результаты
+        int i =0;
+
+        System.out.println(getProducts);
+        Assertions.assertEquals(null, getProducts);   //
 
     }
+
 }

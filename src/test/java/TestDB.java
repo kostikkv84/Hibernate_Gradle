@@ -1,11 +1,11 @@
 import entity.Products;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import services.ProductService;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 
 public class TestDB extends BaseTest{
@@ -95,6 +95,14 @@ public class TestDB extends BaseTest{
         System.out.println(getProducts);
         Assertions.assertEquals(null, getProducts);   //
 
+    }
+
+    @Test
+    public void getAllProduct() throws IOException {
+        ProductService productService = new ProductService(); // стартуем сессию
+        List<Products> product = productService.finAllProduct();  // достаем все записи
+        System.out.println("Найдено - " + product.size() + " записей в бд!");
+        Assertions.assertTrue(product.size() > 1);   // сравниваем значения
     }
 
 }

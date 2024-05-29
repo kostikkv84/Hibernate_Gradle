@@ -1,0 +1,87 @@
+plugins {
+  id 'java'
+  id "org.gradle.test-retry" version "1.5.9"
+  id "io.freefair.lombok" version "6.0.0-m2"
+  id 'war'
+  id 'io.qameta.allure' version("2.11.2")
+}
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+  mavenCentral()
+}
+
+ext {
+  junitVersion = '5.9.2'
+}
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
+}
+
+dependencies {
+
+
+  // Junit
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+  // AssertJ
+  testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.2'
+
+  // Allure
+           // implementation group: 'io.qameta.allure.gradle.allure', name: 'allure-plugin', version: '2.9.6'
+  testImplementation group: 'io.qameta.allure', name: 'allure-junit5', version: '2.25.0'
+  runtimeOnly group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.22'
+
+  // Lombok
+  testCompileOnly 'org.projectlombok:lombok:1.18.30'
+  testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+  // RestAssured + Jackson
+  testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.4.0'
+  implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.17.0'
+  implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.17.0'
+  implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.17.0'
+
+  // Hibernate
+  implementation group: 'org.hibernate.orm', name: 'hibernate-core', version: '6.5.0.Final'
+  // JDBS драйвер
+  implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.3'
+
+  // Логирование
+  implementation 'org.apache.logging.log4j:log4j-api:2.23.1'
+  implementation 'org.apache.logging.log4j:log4j-core:2.23.1'
+
+ //********************************
+  implementation 'com.h2database:h2:1.4.199'
+ // implementation group: 'org.springframework', name: 'spring-core', version: '6.1.7'
+
+}
+
+
+test {
+  retry {
+    maxRetries = 1
+  }
+  testLogging {
+    events "passed", "skipped", "failed", "standardOut", "standardError"
+    exceptionFormat "full";
+  }
+useJUnitPlatform()
+}
+
+// Задача для запуска тестов с тегом "smoke"
+tasks.register('smoke', Test) {
+  testLogging {
+    events "passed", "skipped", "failed", "standardOut", "standardError"
+    exceptionFormat "full"
+  }
+  useJUnitPlatform {
+    includeTags("smoke")
+  }
+}

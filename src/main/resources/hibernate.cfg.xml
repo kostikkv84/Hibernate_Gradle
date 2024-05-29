@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <!-- Настройка подключения к БД -->
+    <property name="connection.url">jdbc:postgresql://localhost:5432/shop</property>
+    <property name="connection.driver_class">org.postgresql.Driver</property>
+    <property name="connection.username">postgres</property>
+    <property name="connection.password">260805</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+    <!-- настройка логов консоли -->
+      <property name="hibernate.show_sql">true</property>
+      <property name="hibernate.format_sql">true</property>
+      <property name="hibernate.highlight_sql">true</property>
+
+
+   <!--  Создает новую таблицу перед инициализации SessionFactory
+    <property name="hibernate.hbm2ddl.auto">create</property>   -->
+    <!-- DB schema will be updated if needed -->
+     <property name="hibernate.hbm2ddl.auto">update</property>
+
+    <!-- Указываем Entity классы -->
+    <mapping class="entity.Products"/>
+
+  </session-factory>
+</hibernate-configuration>

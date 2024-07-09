@@ -37,6 +37,7 @@ dependencies {
 
   // Allure
   implementation 'io.qameta.allure:allure-junit5:2.19.0'
+  runtimeOnly group: 'org.aspectj', name: 'aspectjrt', version: '1.9.22.1'
   runtimeOnly 'org.aspectj:aspectjweaver:1.9.7'
 
   // Lombok
@@ -84,5 +85,16 @@ tasks.register('smoke', Test) {
   }
   useJUnitPlatform {
     includeTags("smoke")
+  }
+}
+
+// Задача для запуска тестов с тегом "smoke"
+tasks.register('regress', Test) {
+  testLogging {
+    events "passed", "skipped", "failed", "standardOut", "standardError"
+    exceptionFormat "full"
+  }
+  useJUnitPlatform {
+    includeTags("regress")
   }
 }

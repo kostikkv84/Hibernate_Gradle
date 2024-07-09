@@ -1,19 +1,21 @@
 import entity.Products;
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import services.ProductService;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 
 public class TestDB extends BaseTest{
 
-
     //******************************************************
 
     @Test
+    @Tag("smoke")
     void insertManualIntoTable(){
 
         Products products = new Products();
@@ -31,6 +33,7 @@ public class TestDB extends BaseTest{
     }
 
     @Test
+    @Tag("smoke")
     void insertFromJson() throws IOException {
         File file = new File("src/test/jsonFiles/product.json");
         System.out.println(file);
@@ -47,6 +50,7 @@ public class TestDB extends BaseTest{
     }
 
     @Test
+    @Tag("regress")
     public void insertProduct() throws IOException {
         ProductService productService = new ProductService(); // стартуем сессию
         File file = new File("src/test/jsonFiles/product.json");
@@ -59,13 +63,16 @@ public class TestDB extends BaseTest{
     }
 
     @Test
+    @Tag("regress")
     public void getProduct() throws IOException {
+        Allure.step("Стартуем ProductService");
         ProductService productService = new ProductService(); // стартуем сессию
-         Products product = productService.findProduct(13); // сохраняем продукт в БД
-       Assertions.assertEquals("Samsung Galaxy1", product.getName());   // сравниваем значения
+        Products product = productService.findProduct(13); // сохраняем продукт в БД
+        Assertions.assertEquals("Samsung Galaxy", product.getName());   // сравниваем значения
     }
 
     @Test
+    @Tag("regress")
     public void updateProduct() throws IOException {
         ProductService productService = new ProductService(); // стартуем сессию
         Products product = productService.findProduct(17); // находим запись
@@ -78,6 +85,7 @@ public class TestDB extends BaseTest{
     }
 
     @Test
+    @Tag("regress")
     public void deleteProduct() throws IOException {
         ProductService productService = new ProductService();  // Открыли сессию
         File file = new File("src/test/jsonFiles/product.json"); // нашли JSON с данными
@@ -95,6 +103,16 @@ public class TestDB extends BaseTest{
         System.out.println(getProducts);
         Assertions.assertEquals(null, getProducts);   //
 
+    }
+
+    @Test
+    @Tag("regress")
+    @Tag("smoke")
+    public void getAllProduct() throws IOException {
+        ProductService productService = new ProductService(); // стартуем сессию
+        List<Products> product = productService.finAllProduct();  // достаем все записи
+       // System.out.println("Найдено - " + product.size() + " записей в бд!");
+        Assertions.assertTrue(product.size() > 1);   // сравниваем значения
     }
 
 }

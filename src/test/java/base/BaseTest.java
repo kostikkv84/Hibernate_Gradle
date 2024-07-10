@@ -1,3 +1,5 @@
+package base;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.HibernateInit;
@@ -8,7 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 public class BaseTest {
     private static Session session;
     ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
-    ObjectMapper objectM = new ObjectMapper();
+    public static ObjectMapper objectM = new ObjectMapper();
 
     public static Session getSession() {
         return session;

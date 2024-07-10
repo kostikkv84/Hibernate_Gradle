@@ -1,16 +1,21 @@
+import base.BaseTest;
+import base.TestListener;
 import entity.Products;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import services.ProductService;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-
-public class TestDB extends BaseTest{
+@ExtendWith(TestListener.class)
+public class TestDB extends BaseTest {
 
     //******************************************************
 
@@ -63,6 +68,8 @@ public class TestDB extends BaseTest{
     }
 
     @Test
+    @Owner("Koskv")
+    @Description("Получение продукта по ID")
     @Tag("regress")
     public void getProduct() throws IOException {
         Allure.step("Стартуем ProductService");

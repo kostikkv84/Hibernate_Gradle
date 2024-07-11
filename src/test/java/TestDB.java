@@ -1,7 +1,6 @@
 import base.BaseTest;
 import base.TestListener;
 import entity.Products;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.Assertions;
@@ -72,7 +71,7 @@ public class TestDB extends BaseTest {
     @Description("Получение продукта по ID")
     @Tag("regress")
     public void getProduct() throws IOException {
-        Allure.step("Стартуем ProductService");
+      //  Allure.step("Стартуем ProductService");
         ProductService productService = new ProductService(); // стартуем сессию
         Products product = productService.findProduct(13); // сохраняем продукт в БД
         Assertions.assertEquals("Samsung Galaxy", product.getName());   // сравниваем значения

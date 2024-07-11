@@ -13,18 +13,22 @@ import java.util.List;
 public class ProductService {
 
     ProductDTO productDTO = new ProductDTO();
+
     @Step("Находим продукт по Id")
     public Products findProduct(int id){
         return productDTO.findById(id);
     }
+
     @Step("Сохраняем продукт")
     public void saveProduct(Products product){
         productDTO.save(product);
     }
+
     @Step("Удаляем продукт")
     public void deleteProduct(Products product){
         productDTO.delete(product);
     }
+
     @Step("Обновляем продукт")
     public void updateProduct(Products product){
         productDTO.update(product);

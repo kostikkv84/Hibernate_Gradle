@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @ExtendWith(TestListener.class)
-public class TestDB extends BaseTest {
+public class TestDBProduct extends BaseTest {
 
     //******************************************************
 
@@ -117,8 +117,18 @@ public class TestDB extends BaseTest {
     public void getAllProduct() throws IOException {
         ProductService productService = new ProductService(); // стартуем сессию
         List<Products> product = productService.finAllProduct();  // достаем все записи
-       // System.out.println("Найдено - " + product.size() + " записей в бд!");
+        product.stream().forEach(x -> System.out.println(x.getId()));
+         System.out.println("Найдено - " + product.size() + " записей в бд!");
         Assertions.assertTrue(product.size() > 1);   // сравниваем значения
+    }
+
+    @Test
+    @Owner("Koskv")
+    @Description("Получение продукта c ценой более указанной в параметре! ")
+    public void getProductsMoreThan1000 (){
+        ProductService service = new ProductService(); // стартуем сессию
+        List<Products> product = service.finAllProductMoreThan(10000);  // достаем все записи
+        product.stream().forEach(x -> System.out.println(x.getPrice()));
     }
 
 }

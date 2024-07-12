@@ -2,17 +2,26 @@ package dto;
 
 import entity.Products;
 import io.qameta.allure.Step;
+import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
 public class ProductDTO  {
-    HibernateInit hibernateInit = new HibernateInit();
 
 @Step("Находим продукт по Id")
 public Products findById(int id){
     return HibernateInit.getSessionFactory().openSession().get(Products.class,id);
+}
+
+
+@Step ("Находим продукты по стоимости")
+public List<Products> findPriceMoreThan(int price){
+    Session session = HibernateInit.getSessionFactory().openSession();
+    Query query = session.createQuery("from Products where price > " + price +  " order by id DESC");
+    List<Products> products = query.getResultList();
+    return products;
 }
 
 @Step("Находим все продукты")
@@ -30,7 +39,7 @@ public void save(Products product){
     session.close();
 }
 
-    @Step("Обновляем продукт")
+@Step("Обновляем продукт")
 public void update(Products product){
     Session session = HibernateInit.getSessionFactory().openSession();
     Transaction tx = session.beginTransaction();

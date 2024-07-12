@@ -24,6 +24,7 @@
 
     <!-- Указываем Entity классы -->
     <mapping class="entity.Products"/>
+    <mapping class="entity.Customers"/>
 
   </session-factory>
 </hibernate-configuration>

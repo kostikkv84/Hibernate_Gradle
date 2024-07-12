@@ -33,11 +33,15 @@ public class ProductService {
     public void updateProduct(Products product){
         productDTO.update(product);
     }
-    @Step("ПОлучаем все продукты")
+
+    @Step("Получаем все продукты")
     public List<Products> finAllProduct(){
         return productDTO.findAll();
     }
 
-
+    @Step("Получаем все продукты с ценой больше ....")
+    public List<Products> finAllProductMoreThan(int price){
+        return productDTO.findPriceMoreThan(price);
+    }
 
 }

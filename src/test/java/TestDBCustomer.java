@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import services.CustomerService;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -12,11 +11,14 @@ public class TestDBCustomer extends BaseTest {
 
     private String name;
 
+    /**
+     * Вставка записи в таблицу и проверка успешного результата
+     * @throws IOException
+     */
     @Test
     public void insertCustomer() throws IOException {
         CustomerService customerService = new CustomerService();
-        File file = new File("src/test/jsonFiles/customer.json");
-        Customers customer = objectM.readValue(file, Customers.class);
+        Customers customer = getEntity(Customers.class, "src/test/jsonFiles/customer.json");
         customer.setName("Гена");
         customer.setLastname("Гениет");
         customer.setSurname("Ольгович");
@@ -38,9 +40,10 @@ public class TestDBCustomer extends BaseTest {
     @Test
     public void updateCustomer() {
         CustomerService service = new CustomerService();
-        Customers customer = service.findCustomer(1);
+        Customers customer = service.findLastCustomer();
         customer.setSurname("testSurname");
         service.update(customer);
+
         Assertions.assertEquals("testSurname", customer.getSurname());
     }
 
@@ -55,12 +58,11 @@ public class TestDBCustomer extends BaseTest {
     @Test
     public void deleteCustomer() throws IOException {
         CustomerService service = new CustomerService();
-        File file = new File("src/test/jsonFiles/customer.json");
-        Customers customer = objectM.readValue(file, Customers.class);
+        Customers customer = getEntity(Customers.class, "src/test/jsonFiles/customer.json");
         service.save(customer); // добавили покупателя
         Integer idcustomer = service.findLastCustomer().getIdcustomer();
-        service.delete(service.findLastCustomer()); // удалили последнего досвленного покупателя
+        service.delete(service.findLastCustomer()); // удалили последнего добавленного покупателя
 
-        Assertions.assertNotEquals(idcustomer , service.findLastCustomer().getIdcustomer());
+        Assertions.assertNotEquals(idcustomer , service.findLastCustomer().getIdcustomer(), "Запись не удалена.");
     }
 }

@@ -58,11 +58,28 @@ public class TestDBProduct extends BaseTest {
     public void insertProduct() throws IOException {
         ProductService productService = new ProductService(); // стартуем сессию
         File file = new File("src/test/jsonFiles/product.json");
+
         Products products = objectM.readValue(file, Products.class); // записываем из Json в класс Product
         products.setName("device11"); // меняем название продукта
         productService.saveProduct(products); // сохраняем продукт в БД
 
         Products getProducts = productService.findProduct(products.getId()); // получаем сохраненный продукт
+        Assertions.assertEquals(products.getName(),getProducts.getName());   // сравниваем значения
+    }
+
+    @Test
+    @Description("Тест, где используется метод принимающий любой класс Entity и возвращающий заполненый Entity")
+    @Tag("regress")
+    public void insertProductTest() throws IOException, IllegalAccessException, InstantiationException {
+        ProductService productService = new ProductService(); // стартуем сессию
+        Products products = getEntity(Products.class,"src/test/jsonFiles/product.json"); // создаем заполненный Entity
+        attachFile("product.json", "src/test/jsonFiles/product.json");// добавление в Аллюр исходного файла создаваемой записи.
+        products.setName("device11"); // меняем название продукта
+        productService.saveProduct(products); // сохраняем продукт в БД
+
+        attachObjectToAllureReport(products); // добавление в Аллюр данных о создаваемой записи.
+        Products getProducts = productService.findProduct(products.getId()); // получаем сохраненный продукт
+
         Assertions.assertEquals(products.getName(),getProducts.getName());   // сравниваем значения
     }
 
@@ -94,8 +111,8 @@ public class TestDBProduct extends BaseTest {
     @Tag("regress")
     public void deleteProduct() throws IOException {
         ProductService productService = new ProductService();  // Открыли сессию
-        File file = new File("src/test/jsonFiles/product.json"); // нашли JSON с данными
-        Products product = objectM.readValue(file, Products.class); // записываем из Json в класс Product
+
+        Products product = getEntity(Products.class,"src/test/jsonFiles/product.json"); // записываем из Json в класс Product
         productService.saveProduct(product); // сохраняем продукт в БД
         Integer id = product.getId(); // получаем id нового продукта
         product = productService.findProduct(id); // находим созданный продукт
@@ -103,10 +120,8 @@ public class TestDBProduct extends BaseTest {
         System.out.println(product);
         productService.deleteProduct(product);  // удаляем продукт из БД
         Products getProducts = productService.findProduct(id); // ищем удаленную запись
-        // сравниваем результаты
-        int i =0;
 
-        System.out.println(getProducts);
+        // сравниваем результаты
         Assertions.assertEquals(null, getProducts);   //
 
     }

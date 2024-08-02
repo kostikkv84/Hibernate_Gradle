@@ -20,16 +20,10 @@ public class TestXml extends BaseXml {
         Assertions.assertEquals("Validation is successful", xmlXSDvalidation("src/test/xml/xmlFile.xml", "src/test/xml/xsdFile.xsd"));
     }
 
-    @Test
-    public void getXml() throws IOException {
-        ObjectMapper objectMapper = new XmlMapper();
-        // Reads from XML and converts to POJO
-        Company company = objectMapper.readValue(
-                StringUtils.toEncodedString(Files.readAllBytes(Paths.get("src/test/xml/xmlFile.xml")), StandardCharsets.UTF_8),
-                Company.class);
-        System.out.println(company);
 
-       Assertions.assertEquals("John Doe", company.getEmployees().getEmployee().get(0).name);
+   @Test
+    public void getXml() throws IOException {
+        Assertions.assertEquals("John Doe", getXmlPojo(Company.class, "src/test/xml/xmlFile.xml").getEmployees().getEmployee().get(0).name);
     }
 
     @Test

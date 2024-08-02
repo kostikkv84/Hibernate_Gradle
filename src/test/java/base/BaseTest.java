@@ -54,6 +54,10 @@ public class BaseTest {
     }
 
     /**
+     * Allure - attachments
+     */
+
+    /**
      * Метод для прикрепления файла к отчету Allure.
      *
      * @param name     Название файла.
@@ -79,6 +83,20 @@ public class BaseTest {
     @Attachment
     public static byte[] getBytes(String resourceName) throws IOException {
         return Files.readAllBytes(Paths.get("src/test/jsonFiles", resourceName));
+    }
+
+    /**
+     * Текст к отчету
+     * @param message
+     * @return
+     */
+    @Attachment(value = "Expected result", type = "text/html")
+    public static String expectedToReport(String message) {
+        return message;
+    }
+    @Attachment(value = "Actual result", type = "text/html")
+    public static String actualToReport(String message) {
+        return message;
     }
 
 }

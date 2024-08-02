@@ -123,7 +123,6 @@ public class TestDBProduct extends BaseTest {
 
         // сравниваем результаты
         Assertions.assertEquals(null, getProducts);   //
-
     }
 
     @Test

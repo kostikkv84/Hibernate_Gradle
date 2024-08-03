@@ -2,8 +2,13 @@ package base;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
 import org.xml.sax.SAXException;
+import pojoClassesXml.Company;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
@@ -28,6 +33,7 @@ public class BaseXml
      * @param xsdPath
      * @return
      */
+    @Step("Валидация XML по XSD")
     public static String xmlXSDvalidation(String xmlPath, String xsdPath){
         String result = "";
         try {
@@ -64,6 +70,7 @@ public class BaseXml
      * @return объект указанного класса, созданный на основе содержимого XML-файла
      * @throws IOException если произошла ошибка при чтении файла или десериализации
      */
+    @Step("Десериализация их XML файла в Pojo объект")
     public static <T> T getXmlPojo(Class<T> clazz, String str) throws IOException {
         // Чтение из XML и преобразование в POJO
         T pojo = objectMapper.readValue(
@@ -73,6 +80,58 @@ public class BaseXml
         return pojo;
     }
 
+    @Step("Проверяем name в записи Pojo объекта")
+    public static void assertCompanyEmployeeName(String expectedName, String xmlFilePath, int i) throws IOException {
+        String actualName = getXmlPojo(Company.class, xmlFilePath).getEmployees().getEmployee().get(i).name;
+        System.out.println("Expected: " + expectedName);
+        System.out.println("Actual: " + actualName);
+        Assertions.assertEquals(expectedName, actualName);
+    }
 
+    /**
+     * Allure - attachments
+     */
+
+    /**
+     * Метод для прикрепления файла к отчету Allure.
+     *
+     * @param name     Название файла.
+     * @param filePath Путь к файлу.
+     * @return Массив байтов файла.
+     * @throws IOException Если произошла ошибка при чтении файла.
+     */
+    @Attachment(value = "Attachment: {0}", type = "text/plain")
+    public static byte[] attachFile(String name, String filePath) throws IOException {
+        return Files.readAllBytes(Paths.get(filePath));
+    }
+
+    /**
+     * Метод для прикрепления объекта к отчету Allure.
+     *
+     * @param object Объект, который нужно прикрепить к отчету.
+     */
+    public static void attachObjectToAllureReport(Object object) {
+        String objectAsString = object.toString();
+        Allure.addAttachment("Object Details", objectAsString);
+    }
+
+    @Attachment
+    public static byte[] getBytes(String resourceName) throws IOException {
+        return Files.readAllBytes(Paths.get("src/test/jsonFiles", resourceName));
+    }
+
+    /**
+     * Текст к отчету
+     * @param message
+     * @return
+     */
+    @Attachment(value = "Expected result", type = "text/html")
+    public static String expectedToReport(String message) {
+        return message;
+    }
+    @Attachment(value = "Actual result", type = "text/html")
+    public static String actualToReport(String message) {
+        return message;
+    }
 
 }

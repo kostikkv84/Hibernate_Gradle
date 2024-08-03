@@ -3,6 +3,7 @@ import base.TestListener;
 import entity.Products;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -55,6 +56,7 @@ public class TestDBProduct extends BaseTest {
 
     @Test
     @Tag("regress")
+    @Step("Тест добавления продукта в базу.")
     public void insertProduct() throws IOException {
         ProductService productService = new ProductService(); // стартуем сессию
         File file = new File("src/test/jsonFiles/product.json");
@@ -70,6 +72,7 @@ public class TestDBProduct extends BaseTest {
     @Test
     @Description("Тест, где используется метод принимающий любой класс Entity и возвращающий заполненый Entity")
     @Tag("regress")
+    @Step("Тест добавления продукта в базу.")
     public void insertProductTest() throws IOException, IllegalAccessException, InstantiationException {
         ProductService productService = new ProductService(); // стартуем сессию
         Products products = getEntity(Products.class,"src/test/jsonFiles/product.json"); // создаем заполненный Entity
@@ -87,6 +90,7 @@ public class TestDBProduct extends BaseTest {
     @Owner("Koskv")
     @Description("Получение продукта по ID")
     @Tag("regress")
+    @Step("Тест получения существующего продукта из базы")
     public void getProduct() throws IOException {
       //  Allure.step("Стартуем ProductService");
         ProductService productService = new ProductService(); // стартуем сессию

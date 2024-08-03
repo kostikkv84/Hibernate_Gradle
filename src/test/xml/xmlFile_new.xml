@@ -1,14 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<company>
-    <employees>
-        <employee id="1">
-            <name>John Doe</name>
-            <position>Software Engineer</position>
-            <department>Engineering</department>
-        </employee><employee id="2">
-        <name>Steven Broad</name>
-        <position>IT Engineer</position>
-        <department>Engineering</department>
-    </employee>
-    </employees>
-</company>
+<company><employees><employee id="1"><name>John Doe</name><position>Software Engineer</position><department>Engineering</department></employee><employee id="2"><name>Steven Broad</name><position>IT Engineer</position><department>Engineering</department></employee></employees></company>

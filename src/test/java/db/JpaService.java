@@ -26,8 +26,6 @@ public abstract class JpaService {
     }
 
 
-
-
     private void transaction(Consumer<Session> action) {
         Transaction transaction = session.getTransaction();
         try {

@@ -1,4 +1,5 @@
 package pojoClassesXml;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.*;
 
@@ -7,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties
 public class Employee {
     @JacksonXmlProperty(localName = "id", isAttribute = true)
     public int id;

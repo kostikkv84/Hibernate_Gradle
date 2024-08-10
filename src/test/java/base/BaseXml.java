@@ -25,6 +25,8 @@ import java.nio.file.Paths;
 
 public class BaseXml
 {
+
+    static AllureAttachment allureAttachment = new AllureAttachment();
     private static ObjectMapper objectMapper = new XmlMapper();
 
     /**
@@ -34,7 +36,7 @@ public class BaseXml
      * @return
      */
     @Step("Валидация XML по XSD")
-    public static String xmlXSDvalidation(String xmlPath, String xsdPath){
+    public static String xmlXSDvalidation(String xmlPath, String xsdPath) throws IOException {
         String result = "";
         try {
             String xml = Files.readString(Path.of(xmlPath));
@@ -54,6 +56,9 @@ public class BaseXml
             result = ("Error when validate XML against XSD Schema");
             System.out.println("Message: " + e.getMessage());
         }
+        allureAttachment.attachFile("XML", xmlPath);
+        allureAttachment.attachFile("XSD", xsdPath);
+
         return result;
     }
 

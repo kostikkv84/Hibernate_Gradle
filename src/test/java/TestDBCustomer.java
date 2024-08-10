@@ -7,6 +7,9 @@ import services.CustomerService;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Примеры работы с БД - основные запросы
+ */
 public class TestDBCustomer extends BaseTest {
 
     private String name;
@@ -31,7 +34,7 @@ public class TestDBCustomer extends BaseTest {
     }
 
     @Test
-    public void getCustomer() {
+    public void getCustomerById() {
         CustomerService service = new CustomerService();
         Customers customer = service.findCustomer(1);
         Assertions.assertEquals("Fsd", customer.getName());

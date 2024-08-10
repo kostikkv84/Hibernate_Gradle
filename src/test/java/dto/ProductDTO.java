@@ -8,13 +8,12 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class ProductDTO  {
+public class ProductDTO   {
 
 @Step("Находим продукт по Id")
 public Products findById(int id){
     return HibernateInit.getSessionFactory().openSession().get(Products.class,id);
 }
-
 
 @Step ("Находим продукты по стоимости")
 public List<Products> findPriceMoreThan(int price){
@@ -24,9 +23,10 @@ public List<Products> findPriceMoreThan(int price){
     return products;
 }
 
-@Step("Находим все продукты")
+@Step("Находим все продукты в таблице Products")
 public List<Products> findAll(){
     List<Products> products = (List<Products>) HibernateInit.getSessionFactory().openSession().createQuery("from Products").list();
+
     return products;
 }
 
@@ -56,6 +56,8 @@ public void delete(Products product){
     tx.commit();
     session.close();
     }
+
+
 
 }
 

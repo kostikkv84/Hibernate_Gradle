@@ -1,3 +1,4 @@
+import base.AllureAttachment;
 import base.BaseTest;
 import base.TestListener;
 import entity.Products;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @ExtendWith(TestListener.class)
 public class TestDBProduct extends BaseTest {
-
+    AllureAttachment attachment = new AllureAttachment();
     //******************************************************
 
     @Test
@@ -76,11 +77,10 @@ public class TestDBProduct extends BaseTest {
     public void insertProductTest() throws IOException, IllegalAccessException, InstantiationException {
         ProductService productService = new ProductService(); // стартуем сессию
         Products products = getEntity(Products.class,"src/test/jsonFiles/product.json"); // создаем заполненный Entity
-        attachFile("product.json", "src/test/jsonFiles/product.json");// добавление в Аллюр исходного файла создаваемой записи.
+        attachment.attachFile("product.json", "src/test/jsonFiles/product.json");// добавление в Аллюр исходного файла создаваемой записи.
         products.setName("device11"); // меняем название продукта
         productService.saveProduct(products); // сохраняем продукт в БД
 
-        attachObjectToAllureReport(products); // добавление в Аллюр данных о создаваемой записи.
         Products getProducts = productService.findProduct(products.getId()); // получаем сохраненный продукт
 
         Assertions.assertEquals(products.getName(),getProducts.getName());   // сравниваем значения
@@ -113,6 +113,7 @@ public class TestDBProduct extends BaseTest {
 
     @Test
     @Tag("regress")
+    @Step("Тест проверяющий удаление записи с продуктом")
     public void deleteProduct() throws IOException {
         ProductService productService = new ProductService();  // Открыли сессию
 

@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import groovy.transform.builder.Builder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties
 public class Customers {
 
     @Id

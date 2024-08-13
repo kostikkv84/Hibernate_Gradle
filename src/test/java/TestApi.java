@@ -8,7 +8,7 @@ import pojoClassesJson.CourierResponse;
 import java.io.File;
 import java.io.IOException;
 
-import static spec.Specification.*;
+import static specApi.Specification.*;
 
 public class TestApi {
     private String URL = "https://qa-scooter.praktikum-services.ru";

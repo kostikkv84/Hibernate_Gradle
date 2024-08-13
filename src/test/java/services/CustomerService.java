@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Сервис для работы с методами (которые обращаются к БД)
+ * Так же добавляются данные в AllureReport
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerService extends AllureAttachment {
@@ -17,7 +21,7 @@ public class CustomerService extends AllureAttachment {
 
     @Step("Найти запись в таблице Customers по Id")
     public Customers findCustomer(int id) {
-        customersDTO.findById(id);
+        attachObjectToAllureReport(customersDTO.findById(id));
         return customersDTO.findById(id);
     }
 

@@ -1,5 +1,6 @@
 package dto;
 
+import base.BaseMethods;
 import entity.Products;
 import io.qameta.allure.Step;
 import jakarta.persistence.Query;
@@ -8,7 +9,10 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class ProductDTO   {
+/**
+ * Класс содержит методы для работы с данными в БД
+ */
+public class ProductDTO extends BaseMethods {
 
 @Step("Находим продукт по Id")
 public Products findById(int id){
@@ -23,10 +27,17 @@ public List<Products> findPriceMoreThan(int price){
     return products;
 }
 
+@Step ("Находим продукты по стоимости")
+public List<Products> findProductsOnPrice(Integer value){
+    Session session = HibernateInit.getSessionFactory().openSession();
+    Query query = session.createQuery("from Products where price = " + value +  " order by id DESC");
+    List<Products> products = query.getResultList();
+    return products;
+    }
+
 @Step("Находим все продукты в таблице Products")
 public List<Products> findAll(){
     List<Products> products = (List<Products>) HibernateInit.getSessionFactory().openSession().createQuery("from Products").list();
-
     return products;
 }
 
@@ -57,7 +68,16 @@ public void delete(Products product){
     session.close();
     }
 
-
+@Step("Удаление продукта по Id продукта")
+public void deleteListProducts(List<Products> products) {
+    Session session = HibernateInit.getSessionFactory().openSession();
+    Transaction tx = session.beginTransaction();
+    for (Products product : products) {
+        session.delete(product);
+    }
+    tx.commit();
+    session.close();
+} // удалить список записей
 
 }
 

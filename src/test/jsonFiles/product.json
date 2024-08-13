@@ -2,5 +2,6 @@
   "name": "Apple",
   "description": "Apple IOS Phone",
   "price": 38000.00,
-  "count": 33
+  "count": 33,
+  "customer_id": 1
 }

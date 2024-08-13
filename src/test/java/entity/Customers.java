@@ -33,14 +33,15 @@ public class Customers {
     @Column(name = "lastname", nullable = true)
     private String lastname;
 
-   // @ManyToOne // создание связи между таблицами Customers & Products
-   // @JoinColumn(name = "idproduct", referencedColumnName = "id")
     @Column(name = "idproduct", nullable = false)
     private Integer idproduct;
 
+  /*  @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<Products> products; */
+
     @Override
     public String toString() {
-        return "Costumers{" +
+        return "Customers{" +
                 "idcustomer=" + idcustomer +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +

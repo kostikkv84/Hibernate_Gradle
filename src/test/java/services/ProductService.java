@@ -11,6 +11,10 @@ import java.util.List;
 
 import static base.AllureAttachment.attachListOfObjectToAllureReport;
 
+/**
+ * Сервис для работы с методами (которые обращаются к БД)
+ * Так же добавляются данные в AllureReport
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductService {
@@ -19,7 +23,7 @@ public class ProductService {
 
     @Step("Находим продукт по Id")
     public Products findProduct(int id){
-        attachment.attachObjectToAllureReport(productDTO.findById(id));
+       // attachment.attachObjectToAllureReport(productDTO.findById(id));
         return productDTO.findById(id);
     }
 
@@ -33,6 +37,12 @@ public class ProductService {
     public void deleteProduct(Products product){
         attachment.attachObjectToAllureReport(product);
         productDTO.delete(product);
+    }
+
+    @Step("Удаляем список продуктов")
+    public void deleteAllProduct(List<Products> products){
+        attachment.attachObjectToAllureReport(products);
+        productDTO.deleteListProducts(products);
     }
 
     @Step("Обновляем продукт")
@@ -52,6 +62,26 @@ public class ProductService {
     public List<Products> finAllProductMoreThan(int price){
         attachment.attachObjectToAllureReport(productDTO.findPriceMoreThan(price));
         return productDTO.findPriceMoreThan(price);
+    }
+
+    @Step("Получаем все продукты с ценой больше ....")
+    public List<Products> findProductOnPrice(int price){
+        attachment.attachObjectToAllureReport(productDTO.findProductsOnPrice(price));
+        return productDTO.findProductsOnPrice(price);
+    }
+
+    @Step("Получаем все продукты по параметру")
+    public List<Products> findProductOnParamInt(Products products, String paramName, int value){
+        List<Products> foundProducts = productDTO.findProductsOnParamInt(Products.class, paramName, value);
+        attachment.attachObjectToAllureReport(foundProducts);
+        return foundProducts;
+    }
+
+    @Step("Получаем все продукты по параметру")
+    public List<Products> findProductOnParamStr(Products products, String paramName, String value){
+        List<Products> foundProducts = productDTO.findProductsOnParamStr(Products.class, paramName, value);
+        attachment.attachObjectToAllureReport(foundProducts);
+        return foundProducts;
     }
 
 }

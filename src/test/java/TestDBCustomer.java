@@ -25,7 +25,7 @@ public class TestDBCustomer extends BaseTest {
         customer.setName("Гена");
         customer.setLastname("Гениет");
         customer.setSurname("Ольгович");
-        customer.setIdproduct(19);
+        //customer.setIdproduct(19);
         customerService.save(customer);
 
         Customers getCustomer = customerService.findCustomer(customer.getIdcustomer());

@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "products", schema = "public", catalog = "shop")
 @NoArgsConstructor
@@ -30,6 +32,13 @@ public class Products {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "customer_id")
+    private Integer customer_id;
+
+   /* @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customers customer; */
+
     @Column(name = "price", nullable = false)
     private Double price;
 
@@ -42,8 +51,22 @@ public class Products {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", customer_id=" + customer_id +
                 ", price=" + price +
                 ", count=" + count +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Products products = (Products) object;
+        return Objects.equals(id, products.id) && Objects.equals(name, products.name) && Objects.equals(description, products.description) && Objects.equals(customer_id, products.customer_id) && Objects.equals(price, products.price) && Objects.equals(count, products.count);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, customer_id, price, count);
     }
 }

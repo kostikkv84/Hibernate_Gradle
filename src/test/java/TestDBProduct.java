@@ -1,6 +1,6 @@
 import base.AllureAttachment;
 import base.BaseTest;
-import base.TestListener;
+import tablesData.ProductParams;
 import entity.Products;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
@@ -8,15 +8,15 @@ import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import services.ProductService;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-@ExtendWith(TestListener.class)
+//@ExtendWith(TestListener.class)
 public class TestDBProduct extends BaseTest {
+
     AllureAttachment attachment = new AllureAttachment();
     //******************************************************
 
@@ -130,6 +130,18 @@ public class TestDBProduct extends BaseTest {
         Assertions.assertEquals(null, getProducts);   //
     }
 
+    /**
+     * Удаляем все продукты с ценой 10000
+     */
+    @Test
+    public void deleteProductsByPrice(){
+        ProductService productService = new ProductService();
+        List<Products> products = productService.findProductOnPrice(10000);
+        productService.deleteAllProduct(products);
+        Assertions.assertTrue(productService.findProductOnPrice(10000).size() < 1);
+
+    }
+
     @Test
     @Tag("regress")
     @Tag("smoke")
@@ -148,6 +160,33 @@ public class TestDBProduct extends BaseTest {
         ProductService service = new ProductService(); // стартуем сессию
         List<Products> product = service.finAllProductMoreThan(10000);  // достаем все записи
         product.stream().forEach(x -> System.out.println(x.getPrice()));
+    }
+
+
+    @Test
+    @Owner("Koskv")
+    @Description("Получение продукта по рандомному параметру - Customer_ID! ")
+    public void getProductsOnCustomerId (){
+        ProductService service = new ProductService(); // стартуем сессию
+        String paramName = ProductParams.customer_id.getParam(); // получаем имя параметра
+        Products products = new Products(); // создать объект класса Products
+        // получаем список продуктов и записываем в объект класса
+        List<Products> product = service.findProductOnParamInt(products, paramName, 1);  // достаем все записи
+        product.stream().forEach(x -> System.out.println(x.getPrice())); // просто просмотр что выбралось
+        product.stream().forEach(x -> Assertions.assertEquals(1, (x.getCustomer_id())));
+    }
+
+    @Test
+    @Owner("Koskv")
+    @Description("Получение продукта по рандомному параметру - Name! ")
+    public void getProductsOnName (){
+        ProductService service = new ProductService(); // стартуем сессию
+        String paramName = ProductParams.name.getParam(); // получаем имя параметра
+        Products products = new Products(); // создать объект класса Products
+        // получаем список продуктов и записываем в объект класса
+        List<Products> product = service.findProductOnParamStr(products, paramName, "Apple");  // достаем все записи
+        product.stream().forEach(x -> System.out.println(x.getDescription())); // просто просмотр что выбралось
+        product.stream().forEach(x -> Assertions.assertEquals("Apple", (x.getName())));
     }
 
 }

@@ -1,4 +1,4 @@
-package spec;
+package specApi;
 
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;

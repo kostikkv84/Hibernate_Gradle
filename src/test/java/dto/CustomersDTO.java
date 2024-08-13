@@ -9,8 +9,10 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
+/**
+ * Класс содержит методы для работы с данными в БД
+ */
 public class CustomersDTO extends AllureAttachment {
-
 
     @Step("Поиск покупателя по Id")
     public Customers findById(int id) {

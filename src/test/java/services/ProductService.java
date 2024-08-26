@@ -72,14 +72,14 @@ public class ProductService {
 
     @Step("Получаем все продукты по параметру")
     public List<Products> findProductOnParamInt(Products products, String paramName, int value){
-        List<Products> foundProducts = productDTO.findProductsOnParamInt(Products.class, paramName, value);
+        List<Products> foundProducts = productDTO.findItemOnParamInt(Products.class, paramName, value);
         attachment.attachObjectToAllureReport(foundProducts);
         return foundProducts;
     }
 
     @Step("Получаем все продукты по параметру")
     public List<Products> findProductOnParamStr(Products products, String paramName, String value){
-        List<Products> foundProducts = productDTO.findProductsOnParamStr(Products.class, paramName, value);
+        List<Products> foundProducts = productDTO.findItemOnParamStr(Products.class, paramName, value);
         attachment.attachObjectToAllureReport(foundProducts);
         return foundProducts;
     }

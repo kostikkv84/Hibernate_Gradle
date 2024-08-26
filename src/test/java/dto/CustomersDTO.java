@@ -1,6 +1,6 @@
 package dto;
 
-import base.AllureAttachment;
+import base.BaseMethods;
 import entity.Customers;
 import io.qameta.allure.Step;
 import jakarta.persistence.Query;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Класс содержит методы для работы с данными в БД
  */
-public class CustomersDTO extends AllureAttachment {
+public class CustomersDTO extends BaseMethods {
 
     @Step("Поиск покупателя по Id")
     public Customers findById(int id) {

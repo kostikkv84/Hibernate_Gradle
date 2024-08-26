@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerService extends AllureAttachment {
-
+    AllureAttachment attachment = new AllureAttachment();
     CustomersDTO customersDTO = new CustomersDTO();
 
     @Step("Найти запись в таблице Customers по Id")
@@ -59,6 +59,20 @@ public class CustomerService extends AllureAttachment {
     public void delete(Customers customers) {
         attachObjectToAllureReport(customers);
         customersDTO.delete(customers);
+    }
+
+    @Step("Получаем все продукты по параметру")
+    public List<Customers> findProductOnParamInt(Customers customers, String paramName, int value){
+        List<Customers> foundProducts = customersDTO.findItemOnParamInt(Customers.class, paramName, value);
+        attachment.attachObjectToAllureReport(foundProducts);
+        return foundProducts;
+    }
+
+    @Step("Получаем все продукты по параметру")
+    public List<Customers> findProductOnParamStr(Customers customers, String paramName, String value){
+        List<Customers> foundProducts = customersDTO.findItemOnParamStr(Customers.class, paramName, value);
+        attachment.attachObjectToAllureReport(foundProducts);
+        return foundProducts;
     }
 
 }

@@ -2,6 +2,7 @@ package base;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,9 +30,9 @@ public class AllureAttachment {
 
     /**
      * Метод для прикрепления объекта к отчету Allure.
-     *
      * @param object Объект, который нужно прикрепить к отчету.
      */
+    @Step("Добавляем объект в отчет")
     public static void attachObjectToAllureReport(Object object) {
         String objectAsString = object.toString();
         Allure.addAttachment("Object Details", objectAsString);
@@ -59,6 +60,7 @@ public class AllureAttachment {
     public static String expectedToReport(String message) {
         return message;
     }
+
     @Attachment(value = "Actual result", type = "text/html")
     public static String actualToReport(String message) {
         return message;

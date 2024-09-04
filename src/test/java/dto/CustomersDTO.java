@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 /**
+ * Уже не актуален - работа через CrudDTO
  * Класс содержит методы для работы с данными в БД
  */
 public class CustomersDTO extends BaseMethods {
@@ -65,6 +66,8 @@ public class CustomersDTO extends BaseMethods {
         session.update(customers);
         tx.commit();
         session.close();
-    } //Обновить запись в таблице Customers
+    } //Обновить запись в таблице Customers */
+
+
 
 }

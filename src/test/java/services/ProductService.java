@@ -12,6 +12,7 @@ import java.util.List;
 import static base.AllureAttachment.attachListOfObjectToAllureReport;
 
 /**
+ * Уже не актуален - работа через crudService
  * Сервис для работы с методами (которые обращаются к БД)
  * Так же добавляются данные в AllureReport
  */

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class BaseTest {
     private static Session session;
@@ -48,6 +49,33 @@ public class BaseTest {
         attachment.attachObjectToAllureReport(clazz);
         return entity;
     }
+
+
+    //--------------- генерация рандомных данных ---------------------------------------
+
+    /**
+     * Генерация рандомной строки
+     */
+    public static String generateString(Random rng, String characters, int length)
+    {
+        char[] text = new char[length];
+        for (int i = 0; i < length; i++)
+        {
+            text[i] = characters.charAt(rng.nextInt(characters.length()));
+        }
+        return new String(text);
+    }
+
+    /**
+     * Рандомное имя
+     * @return
+     */
+    public static String setRandomName() {
+        String names [] = {"Иванов", "Петров", "Мупивкар", "Тернов", "Кравченко", "Лютик", "Карпович", "Жончик", "Александр"};
+        String name  = names[new Random().nextInt(names.length)];
+        return name;
+    }
+
 
 
 }

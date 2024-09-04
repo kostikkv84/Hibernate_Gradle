@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 /**
+ * Уже не актуален - работа через CrudDTO
  * Класс содержит методы для работы с данными в БД
  */
 public class ProductDTO extends BaseMethods {

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
+ * * Уже не актуален - работа через crudService
  * Сервис для работы с методами (которые обращаются к БД)
  * Так же добавляются данные в AllureReport
  */
@@ -61,18 +62,20 @@ public class CustomerService extends AllureAttachment {
         customersDTO.delete(customers);
     }
 
+//-------------------------------------------------------------------------------------
     @Step("Получаем все продукты по параметру")
-    public List<Customers> findProductOnParamInt(Customers customers, String paramName, int value){
-        List<Customers> foundProducts = customersDTO.findItemOnParamInt(Customers.class, paramName, value);
-        attachment.attachObjectToAllureReport(foundProducts);
-        return foundProducts;
-    }
+    public List<Customers> findCustomerOnParamInt(Customers customers, String paramName, int value){
+    List<Customers> foundProducts = customersDTO.findItemOnParamInt(Customers.class, paramName, value);
+    attachment.attachObjectToAllureReport(foundProducts);
+    return foundProducts;
+}
 
     @Step("Получаем все продукты по параметру")
-    public List<Customers> findProductOnParamStr(Customers customers, String paramName, String value){
+    public List<Customers> findCustomerOnParamStr(Customers customers, String paramName, String value){
         List<Customers> foundProducts = customersDTO.findItemOnParamStr(Customers.class, paramName, value);
         attachment.attachObjectToAllureReport(foundProducts);
         return foundProducts;
     }
+
 
 }

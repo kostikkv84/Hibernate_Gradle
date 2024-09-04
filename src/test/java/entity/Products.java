@@ -3,19 +3,13 @@ package entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import groovy.transform.builder.Builder;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "products", schema = "public", catalog = "shop")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Builder
 @JsonIgnoreProperties
 public class Products {

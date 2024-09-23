@@ -72,7 +72,7 @@ public class CustomerService extends AllureAttachment {
 
     @Step("Получаем все продукты по параметру")
     public List<Customers> findCustomerOnParamStr(Customers customers, String paramName, String value){
-        List<Customers> foundProducts = customersDTO.findItemOnParamStr(Customers.class, paramName, value);
+        List<Customers> foundProducts = customersDTO.findItemOnParam(Customers.class, paramName, value);
         attachment.attachObjectToAllureReport(foundProducts);
         return foundProducts;
     }

@@ -10,17 +10,19 @@ public class CrudService extends AllureAttachment {
 
     CrudDTO CrudDTO = new CrudDTO();
 
+
+
     @Step("Найти список записей в таблице по Int")
-    public <T> List<T> findItemInt(Class<T> clazz, String param, int id) {
+    public <T> List<T> findItem(Class<T> clazz, String param, int id) {
         attachObjectToAllureReport(CrudDTO.findItemOnParamInt(clazz, param, id));
         return CrudDTO.findItemOnParamInt(clazz, param, id);
     }
 
 
     @Step("Найти список записей в таблице по Str")
-    public <T> List<T> findItemStr(Class<T> clazz, String param, String value) {
-        attachObjectToAllureReport(CrudDTO.findItemOnParamStr(clazz, param, value));
-        return CrudDTO.findItemOnParamStr(clazz, param, value);
+    public <T> List<T> findItem(Class<T> clazz, String param, String value) {
+        attachObjectToAllureReport(CrudDTO.findItemOnParam(clazz, param, value));
+        return CrudDTO.findItemOnParam(clazz, param, value);
     }
 
     @Step("Найти последнюю запись в таблице")

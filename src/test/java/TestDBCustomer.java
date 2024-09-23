@@ -38,7 +38,7 @@ public class TestDBCustomer extends BaseTest {
        /* System.out.println(customer.getIdcustomer());
         System.out.println(customer.toString()); */
 
-        List<Customers> customersList = crudService.findItemInt(Customers.class, "idcustomer", customer.getIdcustomer());
+        List<Customers> customersList = crudService.findItem(Customers.class, "idcustomer", customer.getIdcustomer());
 
         // Проверяем, что список не пуст и содержит ожидаемого клиента
         Assertions.assertFalse(customersList.isEmpty(), "Список клиентов пуст.");
@@ -49,7 +49,8 @@ public class TestDBCustomer extends BaseTest {
     @Owner("Koskv")
     @Description("Получение покупателя по параметру - Customer_ID! ")
     public void getCustomerById() {
-        List<Customers> customer = crudService.findItemInt(Customers.class,"idcustomer", 1);
+        String param = CustomersParams.idcustomer.getParam();
+        List<Customers> customer = crudService.findItem(Customers.class,param, 1);
         Assertions.assertEquals("Fsd", customer.get(0).getName());
     }
 
@@ -57,7 +58,7 @@ public class TestDBCustomer extends BaseTest {
     @Description("Обновление покупателя, проверка! ")
     @Test
     public void updateCustomer() {
-        Customers customer = crudService.findLastItem(Customers.class, "idcustomer"); // находим последнюю запись по ID
+        Customers customer = crudService.findLastItem(Customers.class, CustomersParams.idcustomer.getParam()); // находим последнюю запись по ID
         customer.setSurname("testSurname"); //  Указываем фамилию в последней записи - setSurname
         crudService.update(customer); // обновляем таблицу измененной записью
 
@@ -68,7 +69,7 @@ public class TestDBCustomer extends BaseTest {
     public void deleteCustomer() throws IOException {
         Customers customer = getEntity(Customers.class, "src/test/jsonFiles/customer.json");
         crudService.save(customer); // добавили покупателя
-        Integer idcustomer = crudService.findLastItem(Customers.class, "idcustomer").getIdcustomer(); // получили id добавленного покупателя
+        Integer idcustomer = crudService.findLastItem(Customers.class, CustomersParams.idcustomer.getParam()).getIdcustomer(); // получили id добавленного покупателя
         crudService.delete(crudService.findLastItem(Customers.class,"idcustomer"));// удалили последнего добавленного покупателя
         Assertions.assertNotEquals(idcustomer , crudService.findLastItem(Customers.class,"idcustomer").getIdcustomer(), "Запись не удалена.");
     }
@@ -91,7 +92,7 @@ public class TestDBCustomer extends BaseTest {
         String paramName = CustomersParams.surname.getParam(); // получаем имя параметра
         System.out.println("Выбран параметр: " + paramName); // выводим в консоль выбранные параметр
         // получаем список продуктов и записываем в объект класса - ищем по surname = "Ольгович1"
-        List<Customers> customersList = crudService.findItemStr(Customers.class, paramName, "Ольгович");  // достаем все записи
+        List<Customers> customersList = crudService.findItem(Customers.class, paramName, "Ольгович");  // достаем все записи
 
         customersList.stream().forEach(x -> System.out.println(x.getSurname())); // просто просмотр что выбралось
         // Проверяем, что все выбранные записи содержат нужные данные.
@@ -102,11 +103,11 @@ public class TestDBCustomer extends BaseTest {
     @Owner("Koskv")
     @Description("Получение покупателя по рандомному параметру, например - ProductId! ")
     public void getCustomerOnProductID (){
-        String paramName = CustomersParams.idproduct.getParam(); // получаем имя параметра
+        String paramName = CustomersParams.idproduct.getParam(); // получаем имя параметра = idproduct
         System.out.println("Выбран параметр: " + paramName); // выводим в консоль выбранные параметр
 
         // получаем список клиентов и записываем в объект класса - ищем по ID = 86
-        List<Customers> customersList = crudService.findItemInt(Customers.class, paramName, 86);  // достаем все записи
+        List<Customers> customersList = crudService.findItem(Customers.class, paramName, 86);  // достаем все записи
 
         customersList.stream().forEach(x -> System.out.println(x.getSurname())); // просто просмотр что выбралось
         // Проверяем, что все выбранные записи содержат нужные данные.
@@ -121,7 +122,7 @@ public class TestDBCustomer extends BaseTest {
         System.out.println("Выбран параметр: " + paramName); // выводим в консоль выбранные параметр
 
         // получаем список продуктов и записываем в объект класса - ищем по ID = 86
-        List<Products> productsList = crudService.findItemStr(Products.class, paramName, "Apple");  // достаем все записи
+        List<Products> productsList = crudService.findItem(Products.class, paramName, "Apple");  // достаем все записи
 
         // productsList.stream().forEach(x -> System.out.println(x.getName())); // просто просмотр что выбралось
         // Проверяем, что все выбранные записи содержат нужные данные.

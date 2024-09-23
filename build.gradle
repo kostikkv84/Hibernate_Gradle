@@ -86,6 +86,8 @@ dependencies {
   implementation 'com.h2database:h2:1.4.199'
   // implementation group: 'org.springframework', name: 'spring-core', version: '6.1.7'
 
+  testImplementation 'io.cucumber:cucumber-java:7.18.1'
+  testImplementation 'io.cucumber:cucumber-junit:7.18.1'
 }
 
 

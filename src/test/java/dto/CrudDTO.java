@@ -10,12 +10,12 @@ import java.util.List;
 public class CrudDTO extends BaseMethods {
 
   //  @Step("Находим продукты по значению поля")
-    public <T> List<T> findItemOnParamInt(Class<T> clazz, String paramName, int value){
+    public <T extends Enum<T>> List<T> findItemOnParam(Class<T> clazz, T param, int value){
         Session session = HibernateInit.getSessionFactory().openSession();
         List<T> items = null;
 
         try {
-            String hql = "from " + clazz.getSimpleName() + " where " + paramName + " = :value";
+            String hql = "from " + clazz.getSimpleName() + " where " + param + " = :value";
             Query query = session.createQuery(hql, clazz);
             query.setParameter("value", value);
             items = query.getResultList();
@@ -27,12 +27,12 @@ public class CrudDTO extends BaseMethods {
     }
 
  //   @Step ("Находим продукты по значению поля")
-    public <T> List<T> findItemOnParamStr(Class<T> clazz, String paramName, String value){
+    public <T> List<T> findItemOnParam(Class<T> clazz, String param, String value){
         Session session = HibernateInit.getSessionFactory().openSession();
         List<T> items = null;
 
         try {
-            String hql = "from " + clazz.getSimpleName() + " where " + paramName + " = :value";
+            String hql = "from " + clazz.getSimpleName() + " where " + param + " = :value";
             Query query = session.createQuery(hql, clazz);
             query.setParameter("value", value);
             items = query.getResultList();

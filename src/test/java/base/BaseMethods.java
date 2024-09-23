@@ -33,7 +33,7 @@ public class BaseMethods {
     }
 
     @Step ("Находим продукты по значению поля")
-    public <T> List<T> findItemOnParamStr(Class<T> clazz, String paramName, String value){
+    public <T> List<T> findItemOnParam(Class<T> clazz, String paramName, String value){
         Session session = HibernateInit.getSessionFactory().openSession();
         List<T> items = null;
 

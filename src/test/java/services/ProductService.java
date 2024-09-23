@@ -80,7 +80,7 @@ public class ProductService {
 
     @Step("Получаем все продукты по параметру")
     public List<Products> findProductOnParamStr(Products products, String paramName, String value){
-        List<Products> foundProducts = productDTO.findItemOnParamStr(Products.class, paramName, value);
+        List<Products> foundProducts = productDTO.findItemOnParam(Products.class, paramName, value);
         attachment.attachObjectToAllureReport(foundProducts);
         return foundProducts;
     }
